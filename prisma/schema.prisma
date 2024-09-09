@@ -1,0 +1,222 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [postgis]
+}
+
+model User {
+  id        String  @id @default(uuid())
+  username  String  @unique
+  fullname  String
+  email     String  @unique
+  password  String
+  activated Boolean @default(false)
+  image     String?
+  provider  String?
+
+  groups UserGroup[] @default([USER])
+
+  balance UserBalance?
+
+  location          String?
+  latitude          Float?
+  longitude         Float?
+  locationGeography Unsupported("\"public\".geography")?
+
+  events            Event[]
+  purchases         Purchase[]
+  withdrawRequests  WithdrawRequest[]
+  notifications     Notification[]
+  notificationReads NotificationRead[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+enum UserGroup {
+  SUPERADMIN
+  ADMIN
+  USER
+}
+
+model UserBalance {
+  id      Int    @id @default(autoincrement())
+  userId  String @unique
+  balance Float  @default(0)
+  revenue Float  @default(0)
+  user    User   @relation(fields: [userId], references: [id])
+}
+
+model Event {
+  id          String       @id @default(uuid())
+  userId      String
+  name        String
+  date        DateTime
+  endDate     DateTime?
+  description String
+  categories  String[]
+  images      EventImage[]
+  status      EventStatus  @default(DRAFT)
+
+  location          String?
+  latitude          Float?
+  longitude         Float?
+  locationGeography Unsupported("\"public\".geography")?
+
+  tickets Ticket[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+enum EventStatus {
+  DRAFT
+  PUBLISHED
+  CANCELLED
+  REJECTED
+}
+
+model EventImage {
+  id          Int     @id @default(autoincrement())
+  eventId     String
+  image       String
+  description String?
+
+  event Event @relation(fields: [eventId], references: [id])
+}
+
+// Ticket variant e.g Normal with price 2000, VIP with price 5000
+model Ticket {
+  id               String    @id @default(uuid())
+  eventId          String
+  name             String
+  price            Float
+  stock            Int
+  currentStock     Int
+  image            String?
+  salesOpenDate    DateTime?
+  purchaseDeadline DateTime?
+
+  purchases Purchase[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  event Event @relation(fields: [eventId], references: [id])
+}
+
+model Purchase {
+  uid          String                @id @default(uuid())
+  ticketId     String
+  userId       String
+  orderId      String
+  price        Float
+  status       PurchaseStatus        @default(PENDING)
+  refundStatus PurchaseRefundStatus?
+  used         Boolean               @default(false)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  ticket Ticket @relation(fields: [ticketId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+enum PurchaseStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
+
+enum PurchaseRefundStatus {
+  REFUNDING
+  REFUNDED
+  DENIED
+}
+
+model WithdrawRequest {
+  id        String                @id @default(uuid())
+  userId    String
+  amount    Float
+  fee       Float?
+  method    String
+  details   String
+  from      WithdrawFrom          @default(BALANCE)
+  status    WithdrawRequestStatus @default(PENDING)
+  createdAt DateTime              @default(now())
+  updatedAt DateTime              @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+enum WithdrawFrom {
+  BALANCE
+  REVENUE
+}
+
+enum WithdrawRequestStatus {
+  PENDING
+  COMPLETED
+  REJECTED
+}
+
+model WithdrawFee {
+  id     Int   @id @default(0)
+  amount Float @default(0)
+}
+
+model Notification {
+  id         Int                     @id @default(autoincrement())
+  userId     String? // null if notification is global
+  message    String
+  type       NotificationType        @default(OTHER)
+  entityType NotificationEntityType?
+  entityId   String?
+  createdAt  DateTime                @default(now())
+  updatedAt  DateTime                @updatedAt
+
+  user  User?              @relation(fields: [userId], references: [id])
+  reads NotificationRead[]
+}
+
+enum NotificationType {
+  EVENT_STATUS
+  TICKET_PURCHASE
+  TICKET_SALES
+  TICKET_REFUND_REQUEST
+  TICKET_REFUND_STATUS
+  WITHDRAW_STATUS
+  OTHER
+}
+
+enum NotificationEntityType {
+  EVENT
+  TICKET
+  PURCHASE
+  WITHDRAW_REQUEST
+}
+
+model NotificationRead {
+  id             Int     @id @default(autoincrement())
+  userId         String
+  notificationId Int
+  isRead         Boolean @default(false)
+
+  notification Notification @relation(fields: [notificationId], references: [id])
+  user         User         @relation(fields: [userId], references: [id])
+
+  @@unique([userId, notificationId])
+}
