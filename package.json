@@ -1,0 +1,38 @@
+{
+  "name": "backtix-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test --workspaces",
+    "start": "npm run start:prod --workspace=@backtix-service/api",
+    "start:dev": "npm run start:dev --workspace=@backtix-service/api",
+    "admin:dev": "npm run dev --workspace=@backtix-service/admin-panel",
+    "admin:dev:host": "npm run dev:host --workspace=@backtix-service/admin-panel",
+    "admin:build": "npm run build --workspace=@backtix-service/admin-panel",
+    "admin:preview": "npm run preview --workspace=@backtix-service/admin-panel",
+    "admin:start": "npm run start --workspace=@backtix-service/admin-panel",
+    "db:seed": "ts-node prisma/seed.ts",
+    "start:conc": "concurrently \"npm start\" \"npm run admin:build && npm run start:noenv --workspace=@backtix-service/admin-panel\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "workspaces": [
+    "apps/admin-panel",
+    "apps/api",
+    "packages/config"
+  ],
+  "dependencies": {
+    "@prisma/client": "^5.7.1"
+  },
+  "devDependencies": {
+    "@ts-safeql/eslint-plugin": "^2.0.3",
+    "concurrently": "^8.2.2",
+    "cpx": "^1.2.1",
+    "prisma": "^5.7.1"
+  },
+  "prisma": {
+    "seed": "ts-node --transpile-only prisma/seed.ts"
+  }
+}
