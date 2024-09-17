@@ -13,17 +13,17 @@ export async function sendEventStatusNotification(params: {
 
 	switch (status) {
 		case 'PUBLISHED':
-			message = `Your event "${eventName}" has been approved. Status: ${status}`
+			message = `Votre événement « ${eventName} » a été approuvé. Statut: ${status}`
 			break
 		case 'REJECTED':
-			message = `Your event "${eventName}" has been rejected. Status: ${status}`
+			message = `Votre événement « ${eventName} » a été rejeté. Statut: ${status}`
 			break
 		case 'CANCELLED':
-			message = `Your event "${eventName}" has been cancelled. Status: ${status}`
+			message = `Votre événement « ${eventName} » a été annulé. Statut: ${status}`
 			break
 		case 'DRAFT':
 		default:
-			message = `Event "${eventName}". Status: ${status}`
+			message = `Événement "${eventName}". Status: ${status}`
 			break
 	}
 
