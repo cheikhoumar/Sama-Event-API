@@ -1,0 +1,53 @@
+{
+	"/": [],
+	"/admin": [
+		"src/routes/admin/+page.ts",
+		"src/routes/admin/+layout.server.ts",
+		"src/routes/admin/+layout.server.ts"
+	],
+	"/admin/dashboard": [
+		"src/routes/admin/dashboard/+page.server.ts",
+		"src/routes/admin/+layout.server.ts"
+	],
+	"/admin/event": [
+		"src/routes/admin/event/+page.server.ts",
+		"src/routes/admin/+layout.server.ts"
+	],
+	"/admin/event/[id]": [
+		"src/routes/admin/event/[id]/+page.server.ts",
+		"src/routes/admin/+layout.server.ts"
+	],
+	"/admin/logout": [
+		"src/routes/admin/logout/+page.server.ts",
+		"src/routes/admin/+layout.server.ts"
+	],
+	"/admin/setting": [
+		"src/routes/admin/setting/+page.server.ts",
+		"src/routes/admin/+layout.server.ts"
+	],
+	"/admin/user": [
+		"src/routes/admin/user/+page.server.ts",
+		"src/routes/admin/+layout.server.ts"
+	],
+	"/admin/user/new": [
+		"src/routes/admin/user/new/+page.server.ts",
+		"src/routes/admin/+layout.server.ts"
+	],
+	"/admin/withdraw": [
+		"src/routes/admin/withdraw/+page.server.ts",
+		"src/routes/admin/+layout.server.ts"
+	],
+	"/auth": [
+		"src/routes/auth/+page.ts"
+	],
+	"/auth/email": [
+		"src/routes/auth/email/+page.server.ts"
+	],
+	"/auth/email/otp": [
+		"src/routes/auth/email/otp/+page.ts",
+		"src/routes/auth/email/otp/+page.server.ts"
+	],
+	"/auth/login": [
+		"src/routes/auth/login/+page.server.ts"
+	]
+}

@@ -1,0 +1,1 @@
+import{r as e}from"../chunks/index.De_1-CT6.js";const r=async()=>e(303,"/admin/dashboard"),t=Object.freeze(Object.defineProperty({__proto__:null,load:r},Symbol.toStringTag,{value:"Module"}));export{t as universal};
