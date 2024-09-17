@@ -1,5 +1,5 @@
 {
-	"name": "@samaevent-service/admin-panel",
+	"name": "@backtix-service/admin-panel",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
