@@ -1,4 +1,4 @@
-import { config } from '@samaevent-service/config'
+import { config } from '@backtix-service/config'
 
 export { config }
 
