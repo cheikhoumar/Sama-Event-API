@@ -20,7 +20,7 @@ import { config } from '../common/config'
         from: `"No Reply" <${config.smtp.from}>`,
       },
       template: {
-        dir: join(__dirname, '/templates'),
+        dir: join(__dirname, 'templates'),
         adapter: new HandlebarsAdapter(),
         options: { strict: true },
       },

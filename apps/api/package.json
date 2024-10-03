@@ -1,15 +1,11 @@
 {
-  "name": "@backtix-service/api",
+  "name": "@samaevent-service/api",
   "version": "0.0.1",
   "author": "",
   "private": true,
   "license": "MIT",
   "scripts": {
-    "pm2:deploy:app": "npm run build && pm2 start app.json",
-    "pm2:start:app": "pm2 start app.json",
-    "pm2:stop:app": "pm2 stop app.json",
-    "pm2:destroy:app": "pm2 delete app.json",
-    "build": "nest build",
+    "build": "nest build && cpx \"./src/mail/templates/**/*\" ./dist/mail/templates --clean",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "metadata": "ts-node src/generate-metadata.ts",
     "start": "nest start",
@@ -24,7 +20,6 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@backtix-service/config": "^1.0.0",
     "@nestjs-modules/mailer": "^1.6.1",
     "@nestjs/cache-manager": "^2.1.1",
     "@nestjs/common": "^10.0.0",
@@ -34,12 +29,13 @@
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^7.1.16",
     "@prisma/client": "^5.7.1",
+    "@samaevent-service/config": "^1.0.0",
     "bcrypt": "^5.1.1",
     "cache-manager": "^5.3.1",
     "cache-manager-redis-yet": "^4.1.2",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
-    "cpx": "1.2.1",
+    "cpx": "^1.5.0",
     "dotenv": "^16.3.1",
     "google-auth-library": "^9.4.2",
     "handlebars": "^4.7.8",
@@ -52,7 +48,8 @@
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "serve": "^6.5.8"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

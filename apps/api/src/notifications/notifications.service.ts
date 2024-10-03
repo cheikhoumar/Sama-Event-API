@@ -113,7 +113,7 @@ export class NotificationsService {
       userId: eventOwnerId,
       message: `${sold} "${event.name
         .substring(0, 32)
-        .trim()}" ticket(s) have been sold`,
+        .trim()}" ticket(s) ont été vendus`,
       type: 'TICKET_SALES',
       entityType: 'EVENT',
       entityId: event.id,

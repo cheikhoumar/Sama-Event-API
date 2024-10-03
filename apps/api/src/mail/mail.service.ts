@@ -10,7 +10,7 @@ export class MailService {
     await this.mailerService.sendMail({
       to: user.email,
       subject: 'Activation de l\'utilisateur par OTP',
-      template: './activation',
+      template: '/templates/activation.hbs',
       context: {
         name: user.fullname,
         email: user.email,
@@ -23,7 +23,7 @@ export class MailService {
     await this.mailerService.sendMail({
       to: user.email,
       subject: 'SignIn OTP Code',
-      template: './admin-signin',
+      template: '/templates/admin-signin.hbs',
       context: {
         name: user.fullname,
         email: user.email,
@@ -36,7 +36,7 @@ export class MailService {
     await this.mailerService.sendMail({
       to: user.email,
       subject: 'Reset Password',
-      template: './templareset-password',
+      template: '/templates/reset-password.hbs',
       context: {
         name: user.fullname,
         username: user.username,

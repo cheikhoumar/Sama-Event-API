@@ -314,9 +314,9 @@ export class PurchaseService {
     // send buyer notification
     this.notificationService.createNotification({
       userId: buyerUserId,
-      message: `You have successfully purchased ${
+      message: `Vous avez acheté avec succès ${
         ticketIds.length
-      } ticket(s) for the event "${event.name
+      } ticket(s) pour l'événement "${event.name
         .substring(0, 32)
         .trim()}". Order ID: ${orderId}`,
       type: 'TICKET_PURCHASE',
